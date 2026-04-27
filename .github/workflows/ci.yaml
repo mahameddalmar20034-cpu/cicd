@@ -1,13 +1,44 @@
-name: CoderCo CICD workflow
-
+name: CoderCo Combined
 on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout code
-      uses: actions/checkout@v4
-    - name: We are testing this workflow
-      run: echo Hello everyone!
+     runs-on: ubuntu-latest
+
+
+     strategy:
+       matrix:
+         python-version:[python-version: [3.8, 3.9, 3.10] 
+     
+     
+     
+     
+     
+     
+     steps:
+     - name: checkout code
+     - uses: actions/checkout@v4
+
+
+     - name: setup python
+     - uses: actions/setup-python@v4
+       with:
+       python-version: ${{ matrix.python-version }}
+
+
+     - name: install dependecies
+       run: |
+         cd chapter4
+         python -m pip install --upgrade pip
+         if [ -f requirements.txt ]; then pip install -r requirements.txt
+         fi
+
+     - name: run tests
+       run: |
+          cd chapter4
+          python -m unittest discover
+
+     - name: notify us of success
+        run: echo "Tests passed on Python 3.8!
+        if: success()
 
