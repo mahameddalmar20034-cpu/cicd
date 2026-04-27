@@ -39,6 +39,7 @@ jobs:
           python -m unittest discover
 
      - name: notify us of success
-        run: echo "Tests passed on Python 3.8!"
-        if: success()
+       if: success()
+       run: echo "Tests passed on Python 3.8!"
+       
 
